@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import style from './components/style.sass'
 import TodoList from './components/todoList'
-
+import $ from 'jquery'
 // import { StyleRoot } from 'radium'
 // import SweetAlert from 'react-bootstrap-sweetalert'
 
@@ -120,5 +120,8 @@ export default class App extends Component {
     )
   }
 }
-
+// need to change structure simplified App.js (then may avoid this line)
+if ($('.fluid-container').length <= 0) {
+  $('body').prepend('<div class="fluid-container"></div>');
+}
 ReactDOM.render(<App />, document.querySelector('.fluid-container'))
