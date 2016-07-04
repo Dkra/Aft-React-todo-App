@@ -106,8 +106,8 @@ export default class App extends Component {
 
           <input type="text" className="todoText" value={ this.state.value } onChange={ (e) => this._handleInputChange(e) } ref={ (el) => this._mainInput = el }></input>
 
-          <button className="btn btn-default" onClick={ this._addTodo.bind(this) }> Add </button>
-          <button className="btn btn-default" onClick={ this._removeAll.bind(this) }> Remove All</button>
+          <button className="btn btn-default add-todo" onClick={ this._addTodo.bind(this) }> Add </button>
+          <button className="btn btn-default remove-all" onClick={ this._removeAll.bind(this) }> Remove All</button>
 
           <a className={this.state.filter === 'All' ? 'active filter-option' : 'filter-option'} onClick={ () => this.setState({filter: 'All'}) } >All</a>
           <a className={this.state.filter === 'Todo' ? 'active filter-option' : 'filter-option'} onClick={ () => this.setState({filter: 'Todo'}) } >Todo</a>
