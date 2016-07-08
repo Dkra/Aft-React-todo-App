@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom'
 import style from './components/style.sass'
 import TodoList from './components/todoList'
 import $ from 'jquery'
-// import { StyleRoot } from 'radium'
-// import SweetAlert from 'react-bootstrap-sweetalert'
 
 export default class App extends Component {
   constructor(props) {
