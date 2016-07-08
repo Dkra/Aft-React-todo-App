@@ -20,7 +20,7 @@ npm start
 launch at http://localhost:9999/
 ```
 
-For testing just run
+### Testing
 ```
 npm test
 ```
