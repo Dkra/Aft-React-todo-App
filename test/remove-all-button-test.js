@@ -4,14 +4,10 @@ import { expect, assert } from 'chai';
 import 'ignore-styles'
 import App from '../app/App';
 
-describe('Remove All Todos', function () {
-  it('Remove All Todos', function () {
+describe('Click on Remove All Todos', function () {
+  it('should remove all todos', function () {
 
     let app = mount(<App/>)
-
-    let todoLengthBefore = app.find('.todoItem').length
-
-    // console.log('todoLengthBefore: ', todoLengthBefore);
 
     for(let i = 0; i < 3; i++) {
       app.setState({
@@ -19,10 +15,9 @@ describe('Remove All Todos', function () {
       })
       app.find('.add-todo').simulate('click')
     }
-    // console.log('todoItem Length: ', app.find('.todoItem').length);
 
     app.find("button.remove-all").simulate('click');
 
-    assert.equal(todoLengthBefore,  app.find('.todoItem').length );
+    expect(app.find('.todoItem').length).to.equal(0);
   });
 });

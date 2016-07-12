@@ -5,7 +5,7 @@ import 'ignore-styles'
 import App from '../app/App';
 
 describe('Add a todo', function () {
-  it('Add a todo', function () {
+  it('should add a todo', function () {
 
     let app = mount(<App/>)
 
