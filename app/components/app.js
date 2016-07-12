@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import style from './components/style.sass'
-import TodoList from './components/todoList'
-import $ from 'jquery'
+import TodoList from './todoList'
+import './style.sass'
 
 export default class App extends Component {
   constructor(props) {
@@ -63,38 +61,6 @@ export default class App extends Component {
     })
   }
 
-  // https://facebook.github.io/react/docs/component-specs.html
-  // Mounting
-  componentWillMount() {
-    // alert('before add new todo!')
-  }
-
-  componentDidMount() {
-    this._mainInput.focus()
-  }
-
-  // Updating
-  shouldComponentUpdate() {
-    return true
-  }
-
-  componentWillReceiveProps() {
-
-  }
-
-  componentWillUpdate() {
-
-  }
-
-  componentDidUpdate() {
-
-  }
-
-  // Unmounting
-  componentWillUnmount() {
-
-  }
-
   render() {
     return (
       <form onSubmit={ (e) => this._handleSubmit(e) }>
@@ -118,8 +84,3 @@ export default class App extends Component {
     )
   }
 }
-// need to change structure simplified App.js (then may avoid this line)
-if ($('.fluid-container').length <= 0) {
-  $('body').prepend('<div class="fluid-container"></div>');
-}
-ReactDOM.render(<App />, document.querySelector('.fluid-container'))
