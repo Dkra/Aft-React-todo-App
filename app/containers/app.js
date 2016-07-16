@@ -1,42 +1,45 @@
 import React, { Component } from 'react'
-import TodoList from './todoList'
-import './style.sass'
+import TodoList from '../components/todoList'
+import '../components/style.sass'
+import addTodo from '../actions/index'
 
 export default class App extends Component {
   constructor(props) {
     super(props)
+    console.log('props', props);
     this.state = {
       value: '',
       todos: [],
       filter: 'All'
     }
   }
-
+  componentWillMount() {
+    console.log(this.props);
+  }
   _handleInputChange (e) {
     if (!e.target.value) return
     this.setState({value: e.target.value.substr(0, 20)})
   }
 
   _handleSubmit (e) {
-    console.log(e)
     e.preventDefault()
     console.log('submitting')
   }
 
   _addTodo () {
     if ( !this._mainInput.value ) return
-
-    this.setState({
-      value: '', // clear input value
-      todos: [
-        ...this.state.todos,
-        {
-          text: this.state.value,
-          isComplete: false,
-          visibilityFilter: 'Todo'
-        }
-      ]
-    })
+    this.props.store.dispatch(addTodo(this._mainInput.value))
+    // this.setState({
+    //   value: '', // clear input value
+    //   todos: [
+    //     ...this.state.todos,
+    //     {
+    //       text: this.state.value,
+    //       isComplete: false,
+    //       visibilityFilter: 'Todo'
+    //     }
+    //   ]
+    // })
 
     this._mainInput.focus()
   }
@@ -64,7 +67,7 @@ export default class App extends Component {
   render() {
     return (
       <form onSubmit={ (e) => this._handleSubmit(e) }>
-        <h1>My Todo App [ React ]</h1>
+        <h1><i>My Todo App [ React & Redux ]</i></h1>
 
         <div className="tool-list">
 
@@ -79,7 +82,7 @@ export default class App extends Component {
 
         </div>
 
-        <TodoList todos={ this.state.todos } filter={ this.state.filter } toggleTodoFn={ this._toggleTodo.bind(this) } removeTodoFn={ this._removeSpecificTodo.bind(this) }/>
+        <TodoList todos={ this.props.store.getState().todos } filter={ this.state.filter } toggleTodoFn={ this._toggleTodo.bind(this) } removeTodoFn={ this._removeSpecificTodo.bind(this) }/>
       </form>
     )
   }
