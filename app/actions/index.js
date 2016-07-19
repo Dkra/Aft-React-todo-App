@@ -1,7 +1,6 @@
-export const actionType = 'ADD_TODO'
-export default (text) => {
+export function addTodo(text) {
   return {
-    type: actionType,
+    type: 'ADD_TODO',
     data: text
   }
 }

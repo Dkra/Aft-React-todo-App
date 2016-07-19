@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import TodoList from '../components/todoList'
 import '../components/style.sass'
-import addTodo from '../actions/index'
+import * as ActionCreators from '../actions/index'
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props)
     console.log('props', props);
     this.state = {
       value: '',
-      todos: [],
+      // todos: [],
       filter: 'All'
     }
-  }
-  componentWillMount() {
-    console.log(this.props);
   }
   _handleInputChange (e) {
     if (!e.target.value) return
@@ -28,7 +27,13 @@ export default class App extends Component {
 
   _addTodo () {
     if ( !this._mainInput.value ) return
-    this.props.store.dispatch(addTodo(this._mainInput.value))
+    // this.props.dispatch(addTodo(this._mainInput.value))
+    this.props.addTodo(this._mainInput.value)
+    console.log(this.props);
+    console.log(this.context.store.getState());
+    this.setState({
+      value: ''
+    })
     // this.setState({
     //   value: '', // clear input value
     //   todos: [
@@ -82,8 +87,21 @@ export default class App extends Component {
 
         </div>
 
-        <TodoList todos={ this.props.store.getState().todos } filter={ this.state.filter } toggleTodoFn={ this._toggleTodo.bind(this) } removeTodoFn={ this._removeSpecificTodo.bind(this) }/>
+        <TodoList todos={ this.props.todos } filter={ this.state.filter } toggleTodoFn={ this._toggleTodo.bind(this) } removeTodoFn={ this._removeSpecificTodo.bind(this) }/>
       </form>
     )
   }
 }
+// will pass redux store's current state into this function
+function mapStateToProps({todos}) {
+  // return state for react props
+  return {
+    todos: todos
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators( ActionCreators, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

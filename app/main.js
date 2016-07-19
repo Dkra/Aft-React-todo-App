@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import App from './containers/app'
 import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import reducers from './reducers'
 import $ from 'jquery'
 
@@ -13,6 +14,9 @@ if ($('.fluid-container').length <= 0) {
 // console.log(createStore(reducers));
 
 ReactDOM.render(
-  <App store={ createStore(reducers) } />,
+  <Provider store={ createStore(reducers) }>
+    <App />
+  </Provider>
+  ,
   document.querySelector('.fluid-container')
 )
