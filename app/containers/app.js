@@ -8,29 +8,23 @@ import * as ActionCreators from '../actions/index'
 class App extends Component {
   constructor(props) {
     super(props)
-    console.log('props', props);
     this.state = {
       value: '',
-      // todos: [],
       filter: 'All'
     }
   }
   _handleInputChange (e) {
-    if (!e.target.value) return
     this.setState({value: e.target.value.substr(0, 20)})
   }
 
   _handleSubmit (e) {
     e.preventDefault()
-    console.log('submitting')
   }
 
   _addTodo () {
     if ( !this._mainInput.value ) return
     // this.props.dispatch(addTodo(this._mainInput.value))
     this.props.addTodo(this._mainInput.value)
-    console.log(this.props);
-    console.log(this.context.store.getState());
     this.setState({
       value: ''
     })
@@ -50,26 +44,35 @@ class App extends Component {
   }
 
   _removeAll () {
-    this.setState({ todos: [] })
+    this.props.removeAllTodo()
   }
 
   _removeSpecificTodo (index) {
-    const todos = [ ...this.state.todos ]
-    todos.splice(index, 1)
-    this.setState({todos})
+    this.props.removeSpecificTodo(index)
+
+    // const todos = [ ...this.state.todos ]
+    // todos.splice(index, 1)
+    // this.setState({todos})
   }
 
   _toggleTodo(index) {
-    let Todos = [ ...this.state.todos ]
-    Todos[index].isComplete = !Todos[index].isComplete
-    Todos[index].visibilityFilter = Todos[index].isComplete ? 'Done' : 'Todo'
-
-    this.setState({
-      todos: Todos
-    })
+    this.props.toggleTodoStatus(index)
+    // let Todos = [ ...this.state.todos ]
+    // Todos[index].isComplete = !Todos[index].isComplete
+    // Todos[index].visibilityFilter = Todos[index].isComplete ? 'Done' : 'Todo'
+    //
+    // this.setState({
+    //   todos: Todos
+    // })
   }
+  // componentWillUpdate(nextProps, nextState) {
+  //   console.log(this.props);
+  //   console.log('nextProps', nextProps);
+  //   // console.log('--------Render--------');
+  // }
 
   render() {
+    console.log(this.props);
     return (
       <form onSubmit={ (e) => this._handleSubmit(e) }>
         <h1><i>My Todo App [ React & Redux ]</i></h1>
@@ -81,22 +84,23 @@ class App extends Component {
           <button className="btn btn-default add-todo" onClick={ this._addTodo.bind(this) }> Add </button>
           <button className="btn btn-default remove-all" onClick={ this._removeAll.bind(this) }> Remove All</button>
 
-          <a className={this.state.filter === 'All' ? 'active filter-option' : 'filter-option'} onClick={ () => this.setState({filter: 'All'}) } >All</a>
-          <a className={this.state.filter === 'Todo' ? 'active filter-option' : 'filter-option'} onClick={ () => this.setState({filter: 'Todo'}) } >Todo</a>
-          <a className={this.state.filter === 'Done' ? 'active filter-option' : 'filter-option'} onClick={ () => this.setState({filter: 'Done'}) } >Done</a>
+          <a className={this.props.filter === 'All' ? 'active filter-option' : 'filter-option'} onClick={ () => this.props.changeVisibilityFilter('All') } >All</a>
+          <a className={this.props.filter === 'Todo' ? 'active filter-option' : 'filter-option'} onClick={ () => this.props.changeVisibilityFilter('Todo') } >Todo</a>
+          <a className={this.props.filter === 'Done' ? 'active filter-option' : 'filter-option'} onClick={ () => this.props.changeVisibilityFilter('Done') } >Done</a>
 
         </div>
 
-        <TodoList todos={ this.props.todos } filter={ this.state.filter } toggleTodoFn={ this._toggleTodo.bind(this) } removeTodoFn={ this._removeSpecificTodo.bind(this) }/>
+        <TodoList todos={ this.props.todos } filter={ this.props.filter } toggleTodoFn={ this._toggleTodo.bind(this) } removeTodoFn={ this._removeSpecificTodo.bind(this) }/>
       </form>
     )
   }
 }
 // will pass redux store's current state into this function
-function mapStateToProps({todos}) {
+function mapStateToProps({todos, filter}) {
   // return state for react props
   return {
-    todos: todos
+    todos: todos,
+    filter: filter
   }
 }
 
