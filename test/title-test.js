@@ -5,12 +5,8 @@ import 'ignore-styles'
 import App from '../app/App';
 
 describe('App\'s title should be My Todo App [ React ]', function () {
-  // it('should be My Todo App [ React ]', function () {
-  //   let app = shallow(<App/>);
-  //   expect(app.find('h1').text()).to.equal('My Todo App [ React ]');
-  // });
   it('should be My Todo App [ React ]', function () {
     let app = shallow(<App/>);
-    expect(app.find('h1').text()).to.equal('let this get error');
+    expect(app.find('h1').text()).to.equal('My Todo App [ React ]');
   });
 });
